@@ -1,0 +1,7 @@
+aplicacao
+	inicioappa
+		int TEST;
+	 	caracter NOME;
+	 	VALOR:=11;
+	 	NOME:=VALOR;
+	fimapp

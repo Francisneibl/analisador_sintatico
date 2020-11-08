@@ -1,0 +1,39 @@
+package sintatico;
+
+import java_cup.runtime.*;
+import java.util.*;
+import java.io.*;
+
+parser code {:
+	public void syntax_error(Symbol cur_token){
+		System.err.println("Syntax error at "+cur_token);
+    }
+    
+	public void report_error(String message, Object info){
+		System.out.println("Aviso - " + message);
+		System.out.println(info.toString());
+	}
+	
+	public void report_fatal_error(String message, Object info){
+		System.out.println("Erro - "+message);
+		System.exit(-1);
+	}
+:};
+
+terminal APLICACAO, INICIOAPP, FIMAPP, TIPO_CARACTER, TIPO_INTEIRO, ATRIBUICAO;
+terminal PTVG, INTEIRO, CHAR, DECIMAL, VARIAVEL;
+
+non terminal comandos, comando, exp, tipo, aplicacao, declaracao_variavel, declaracao_atribuicao;
+
+start with aplicacao;
+
+aplicacao ::= APLICACAO INICIOAPP comandos FIMAPP;
+comandos ::= comando comandos | comando;
+comando ::= declaracao_variavel | declaracao_atribuicao;
+
+declaracao_variavel ::= tipo VARIAVEL PTVG;
+tipo ::= TIPO_CARACTER | TIPO_INTEIRO;
+
+declaracao_atribuicao ::= VARIAVEL ATRIBUICAO exp PTVG;
+exp ::= INTEIRO | CHAR | VARIAVEL;
+
